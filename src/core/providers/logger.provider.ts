@@ -1,9 +1,9 @@
 import {ConfigModule, ConfigService} from '@nestjs/config';
-import * as process from "node:process";
-import {EnvironmentTypes, LoggerProviderType} from "../enums/environment.enum";
-import {WinstonModuleAsyncOptions} from "nest-winston";
-import * as winston from "winston";
-import * as path from "node:path";
+import * as process from 'node:process';
+import {EnvironmentTypes, LoggerProviderType,} from '../enums/environment.enum';
+import {WinstonModuleAsyncOptions} from 'nest-winston';
+import * as winston from 'winston';
+import * as path from 'node:path';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
 
 export const getLoggerProviderType = (): LoggerProviderType => {
@@ -25,13 +25,13 @@ export const getLoggerProvider = () => {
   return loggerDevProvider;
 };
 
-const customFormat = winston.format.printf(({ timestamp, level, message }) => {
+const customFormat = winston.format.printf(({timestamp, level, message}) => {
   return `${timestamp} ${level}: ${message}`;
 });
 
 const loggerDevProvider: WinstonModuleAsyncOptions = {
   imports: [ConfigModule],
-  useFactory: (config: ConfigService) => ({
+  useFactory: () => ({
     transports: [
       new winston.transports.Console({
         level: 'debug',
@@ -45,11 +45,11 @@ const loggerDevProvider: WinstonModuleAsyncOptions = {
     ],
   }),
   inject: [ConfigService],
-}
+};
 
 const loggerProdProvider: WinstonModuleAsyncOptions = {
   imports: [ConfigModule],
-  useFactory: (config: ConfigService) => ({
+  useFactory: () => ({
     transports: [
       new winston.transports.Console({
         level: 'info',
@@ -72,8 +72,8 @@ const loggerProdProvider: WinstonModuleAsyncOptions = {
           winston.format.timestamp(),
           customFormat,
         ),
-      })
+      }),
     ],
   }),
   inject: [ConfigService],
-}
+};

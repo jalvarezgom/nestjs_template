@@ -1,8 +1,7 @@
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {TypeOrmModuleAsyncOptions} from '@nestjs/typeorm';
-import * as process from "node:process";
-import {DatabaseProviderType, EnvironmentTypes} from "../enums/environment.enum";
-
+import * as process from 'node:process';
+import {DatabaseProviderType, EnvironmentTypes,} from '../enums/environment.enum';
 
 export const getDatabaseProviderType = (): DatabaseProviderType => {
   switch (process.env.APP_ENV as EnvironmentTypes) {

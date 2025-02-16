@@ -1,9 +1,10 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import {CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
+import {Reflector} from '@nestjs/core';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector) {
+  }
 
   matchRoles(validRoles: string[], userRole: string) {
     return validRoles.some((role) => userRole === role);

@@ -1,9 +1,3 @@
-export enum EnvironmentTypes {
-  PROD = 'PROD',
-  DEV = 'DEV',
-  TEST = 'TEST',
-}
-
 export class EnvironmentConfigService {
   private static requiredEnvVars = [
     //Application

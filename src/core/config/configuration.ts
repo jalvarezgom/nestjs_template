@@ -1,5 +1,4 @@
-// Default configuration variables
-import { EnvironmentTypes } from './environment';
+import {EnvironmentTypes} from '../enums/environment.enum';
 
 const DEFAULT_SERVER_PORT = 3000;
 
@@ -18,6 +17,7 @@ interface Configuration {
     refreshSecretExpirationTime: string;
   };
   databaseConfig: {
+    dbEngine: string;
     dbHost: string;
     dbPort: number;
     dbName: string;
@@ -49,6 +49,7 @@ export const configuration = (): Configuration => {
         .JWT_REFRESH_SECRET_EXPIRATION_TIME as string,
     },
     databaseConfig: {
+      dbEngine: process.env.DB_ENGINE as string,
       dbHost: process.env.DB_HOST as string,
       dbPort: +process.env.DB_PORT,
       dbName: process.env.DB_NAME as string,

@@ -5,7 +5,6 @@ import {BadRequestException} from '@nestjs/common';
 import {UserRepository} from '../repositories/user.repository';
 import {ProfileService} from '../services/profile.service';
 import {ChangePwdDto} from '../dtos/auth.dto';
-import {WINSTON_MODULE_NEST_PROVIDER} from "nest-winston/dist/winston.constants";
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -24,12 +23,7 @@ describe('AuthService', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-      providers: [
-        // {
-        //   provide: WINSTON_MODULE_NEST_PROVIDER,
-        //   useValue: {log: jest.fn()}
-        // }
-      ]
+      providers: [],
     }).compile();
 
     userRepository = module.get<UserRepository>(UserRepository);
@@ -62,7 +56,7 @@ describe('AuthService', () => {
   describe('login', () => {
     it('should generate tokens', async () => {
       const user = await userRepository.findByUsername('test');
-      const { accessToken, refreshToken } = await service.getTokens(
+      const {accessToken, refreshToken} = await service.getTokens(
         user.id,
         user.username,
       );
@@ -72,7 +66,7 @@ describe('AuthService', () => {
 
     it('should refresh a token', async () => {
       const user = await userRepository.findByUsername('test');
-      const { refreshToken } = await service.getTokens(user.id, user.username);
+      const {refreshToken} = await service.getTokens(user.id, user.username);
       const result = await service.refreshToken(user.id, refreshToken);
       expect(result).toBeDefined();
     });
@@ -84,7 +78,7 @@ describe('AuthService', () => {
 
     it('should throw an error if the user does not exist', async () => {
       try {
-        await service.login({ username: 'test2', password: 'test' });
+        await service.login({username: 'test2', password: 'test'});
         expect(true).toBe(false);
       } catch (error) {
         expect(error).toBeInstanceOf(BadRequestException);

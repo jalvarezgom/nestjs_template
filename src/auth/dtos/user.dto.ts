@@ -1,5 +1,5 @@
-import { Exclude } from 'class-transformer';
-import { AuthTokenDto } from './auth.dto';
+import {Exclude} from 'class-transformer';
+import {AuthTokenDto} from './auth.dto';
 
 export class UserResponseDto {
   id: string;

@@ -6,9 +6,9 @@ import {configuration, getEnvironmentFileNameByEnvVariable,} from './core/config
 import {AuthModule} from './auth/auth.module';
 import {CoreModule} from './core/core.module';
 import {getDatabaseProvider} from './core/providers/database.provider';
-import {WinstonModule} from "nest-winston";
+import {WinstonModule} from 'nest-winston';
 
-import {getLoggerProvider} from "./core/providers/logger.provider";
+import {getLoggerProvider} from './core/providers/logger.provider';
 
 @Module({
   imports: [
@@ -26,4 +26,5 @@ import {getLoggerProvider} from "./core/providers/logger.provider";
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+}

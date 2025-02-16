@@ -9,3 +9,8 @@ export enum DatabaseProviderType {
   TEST = 'databaseTestProvider',
   PROD = 'databaseProdProvider',
 }
+
+export enum LoggerProviderType {
+  DEV = 'loggerDevProvider',
+  PROD = 'loggerProdProvider',
+}

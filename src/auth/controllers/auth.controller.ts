@@ -9,22 +9,17 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { AuthService } from '../services/auth.service';
-import {
-  AuthLoginDto,
-  AuthTokenDto,
-  ChangePwdDto,
-  CreateUserDto,
-  SendRecoverPwdDto,
-} from '../dtos/auth.dto';
-import { AccessTokenGuard } from '../guards/accessToken.guard';
-import { Request } from 'express';
-import { RefreshTokenGuard } from '../guards/refreshToken.guard';
-import { UserResponseDto } from '../dtos/user.dto';
+import {AuthService} from '../services/auth.service';
+import {AuthLoginDto, AuthTokenDto, ChangePwdDto, CreateUserDto, SendRecoverPwdDto,} from '../dtos/auth.dto';
+import {AccessTokenGuard} from '../guards/accessToken.guard';
+import {Request} from 'express';
+import {RefreshTokenGuard} from '../guards/refreshToken.guard';
+import {UserResponseDto} from '../dtos/user.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {
+  }
 
   @Post('register')
   register(@Body() userDataDto: CreateUserDto) {
