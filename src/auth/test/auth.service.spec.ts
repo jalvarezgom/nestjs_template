@@ -1,10 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from '../services/auth.service';
-import { AppModule } from '../../app.module';
-import { BadRequestException } from '@nestjs/common';
-import { UserRepository } from '../repositories/user.repository';
-import { ProfileService } from '../services/profile.service';
-import { ChangePwdDto } from '../dtos/auth.dto';
+import {Test, TestingModule} from '@nestjs/testing';
+import {AuthService} from '../services/auth.service';
+import {AppModule} from '../../app.module';
+import {BadRequestException} from '@nestjs/common';
+import {UserRepository} from '../repositories/user.repository';
+import {ProfileService} from '../services/profile.service';
+import {ChangePwdDto} from '../dtos/auth.dto';
+import {WINSTON_MODULE_NEST_PROVIDER} from "nest-winston/dist/winston.constants";
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -23,6 +24,12 @@ describe('AuthService', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
+      providers: [
+        // {
+        //   provide: WINSTON_MODULE_NEST_PROVIDER,
+        //   useValue: {log: jest.fn()}
+        // }
+      ]
     }).compile();
 
     userRepository = module.get<UserRepository>(UserRepository);
