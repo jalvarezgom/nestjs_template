@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common';
 import {App_1Module} from './app_1/app_1.module';
 import {ConfigModule} from '@nestjs/config';
 import {TypeOrmModule} from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import {getDatabaseProvider} from './core/providers/database.provider';
 import {WinstonModule} from 'nest-winston';
 
 import {getLoggerProvider} from './core/providers/logger.provider';
+import {ResponseMiddleware} from "./core/middlewares/response.middleware";
 
 @Module({
   imports: [
@@ -26,5 +27,8 @@ import {getLoggerProvider} from './core/providers/logger.provider';
   controllers: [],
   providers: [],
 })
-export class AppModule {
+export class AppModule implements NestModule{
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(ResponseMiddleware).forRoutes('*');
+  }
 }
