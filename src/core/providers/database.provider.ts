@@ -51,7 +51,7 @@ const databaseDevProvider: TypeOrmModuleAsyncOptions = {
     ...getCommonDatabaseConfig(config),
     entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
     synchronize: true,
-    logging: true,
+    logging: config.get('databaseConfig.debug'),
   }),
   inject: [ConfigService],
 };
@@ -62,8 +62,8 @@ const databaseProdProvider: TypeOrmModuleAsyncOptions = {
     type: 'sqlite',
     database: config.get('databaseConfig.dbName'),
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    synchronize: config.get('app.env') === EnvironmentTypes.DEV,
-    logging: config.get('app.env') === EnvironmentTypes.DEV,
+    synchronize: false,
+    logging: false,
   }),
   inject: [ConfigService],
 };
