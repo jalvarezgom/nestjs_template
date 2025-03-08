@@ -1,4 +1,4 @@
-import {IsEmail, IsNotEmpty} from "class-validator";
+import {IsEmail, IsNotEmpty, IsOptional} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateUserDto {
@@ -41,6 +41,7 @@ export class AuthLoginDto {
 }
 
 export class AuthTokenDto {
+  @IsOptional()
   @ApiProperty({
     example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.....',
     description: 'The access token',
@@ -65,6 +66,7 @@ export class SendRecoverPwdDto {
 }
 
 export class ChangePwdDto {
+  @IsOptional()
   @ApiProperty({
     example: 'password',
     description: 'The new password',
