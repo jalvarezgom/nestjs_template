@@ -1,6 +1,6 @@
 import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
-import {Logger} from '@nestjs/common';
+import {Logger, ValidationPipe} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {EnvironmentConfigService} from './core/config/environment';
 import {getDatabaseProviderType} from './core/providers/database.provider';
@@ -22,6 +22,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, documentFactory);
 
   const port = configService.get('server.port');
+  app.useGlobalPipes(new ValidationPipe())
   await app.listen(port ?? 3000);
   Logger.log(`Application ${configService.get('app.name')}`);
   Logger.log(`\tEnvironment ${configService.get('app.env')}`);

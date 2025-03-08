@@ -24,7 +24,7 @@ export class AuthService {
   ) {
   }
 
-  async register(userDto: CreateUserDto): Promise<AuthTokenDto> {
+  async register(userDto: CreateUserDto): Promise<UserResponseDto> {
     let user: User | undefined = await this.usersRepository.findByUsername(
       userDto.username,
     );
@@ -46,10 +46,12 @@ export class AuthService {
       user,
       await HashUtil.hashData(refreshToken),
     );
-    return {
+    const response: UserResponseDto = new UserResponseDto(user);
+    response.token = {
       accessToken,
       refreshToken,
     };
+    return response;
   }
 
   async login(credentials: AuthLoginDto): Promise<UserResponseDto> {
@@ -131,7 +133,7 @@ export class AuthService {
     return null;
   }
 
-  async recoverPassword(otpValue: string, recoverData: ChangePwdDto) {
+  async recoverPassword(otpValue: string, recoverData: ChangePwdDto): Promise<UserResponseDto> {
     // Validate otp
     const otp = await this.otpRepository.findByOTP(otpValue);
     if (!otp) {
@@ -159,13 +161,15 @@ export class AuthService {
       user,
       await HashUtil.hashData(refreshToken),
     );
-    return {
+    const response: UserResponseDto = new UserResponseDto(user);
+    response.token =  {
       accessToken,
       refreshToken,
     };
+    return response
   }
 
-  async getTokens(userId: string, username: string) {
+  async getTokens(userId: string, username: string): Promise<AuthTokenDto> {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
