@@ -1,5 +1,5 @@
-import {ConfigModule, ConfigService} from '@nestjs/config';
-import {TypeOrmModuleAsyncOptions} from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import * as process from 'node:process';
 import {
   DatabaseProviderType,

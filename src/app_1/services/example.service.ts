@@ -17,6 +17,10 @@ export class ExampleService extends PaginationService {
     super();
   }
 
+  async findFirst(): Promise<ExampleEntity> {
+    return this.exampleRepository.findOne({ where: { id: 1 } });
+  }
+
   async findAll(): Promise<ExampleEntity[]> {
     return this.exampleRepository.find();
   }

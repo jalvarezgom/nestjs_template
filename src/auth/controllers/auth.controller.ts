@@ -1,15 +1,13 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Get,
   Param,
   Post,
   Req,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
-import { AuthService } from '../services/auth.service';
+import {AuthService} from '../services/auth.service';
 import {
   AuthLoginDto,
   AuthTokenDto,
@@ -17,18 +15,21 @@ import {
   CreateUserDto,
   SendRecoverPwdDto,
 } from '../dtos/auth.dto';
-import { AccessTokenGuard } from '../guards/accessToken.guard';
-import { Request } from 'express';
-import { RefreshTokenGuard } from '../guards/refreshToken.guard';
-import { UserResponseDto } from '../dtos/user.dto';
-import { ApiResponse } from '@nestjs/swagger';
-import { BadRequestExceptionDto } from '../../core/dto/exception.dto';
+import {AccessTokenGuard} from '../guards/accessToken.guard';
+import {Request} from 'express';
+import {RefreshTokenGuard} from '../guards/refreshToken.guard';
+import {UserResponseDto} from '../dtos/user.dto';
+import {ApiResponse} from '@nestjs/swagger';
+import {BadRequestExceptionDto} from '../../core/dto/exception.dto';
+import {Serialize} from "../../core/pagination/serialization.decorator";
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {
+  }
 
   @Post('register')
+  @Serialize(UserResponseDto)
   @ApiResponse({
     status: 201,
     description: 'User created',
@@ -44,7 +45,7 @@ export class AuthController {
   }
 
   @Post('login')
-  @UseInterceptors(ClassSerializerInterceptor)
+  @Serialize(UserResponseDto)
   @ApiResponse({
     status: 200,
     description: 'User logged in',
@@ -61,8 +62,8 @@ export class AuthController {
 
   @Get('logout')
   @UseGuards(AccessTokenGuard)
-  @ApiResponse({ status: 200, description: 'User logged out' })
-  @ApiResponse({ status: 401, description: 'No logged' })
+  @ApiResponse({status: 200, description: 'User logged out'})
+  @ApiResponse({status: 401, description: 'No logged'})
   logout(@Req() request: Request) {
     return this.authService.logout(request.user['sub']);
   }
