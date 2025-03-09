@@ -1,5 +1,5 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+import {ConfigModule, ConfigService} from '@nestjs/config';
+import {TypeOrmModuleAsyncOptions} from '@nestjs/typeorm';
 import * as process from 'node:process';
 import {
   DatabaseProviderType,
@@ -62,9 +62,9 @@ const databaseDevProvider: TypeOrmModuleAsyncOptions = {
 const databaseProdProvider: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
   useFactory: (config: ConfigService) => ({
-    type: 'sqlite',
-    database: config.get('databaseConfig.dbName'),
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    type: config.get('databaseConfig.dbEngine'),
+    ...getCommonDatabaseConfig(config),
+    entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
     synchronize: false,
     logging: false,
   }),
