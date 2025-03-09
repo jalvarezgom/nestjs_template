@@ -1,6 +1,5 @@
-import {SortOrder} from "./pagination.enum";
-import {PaginationFilter} from "./pagination.filter";
-import {FindOptionsWhere, Repository} from "typeorm";
+import { PaginationFilter } from './pagination.filter';
+import { FindOptionsWhere, Repository } from 'typeorm';
 
 export class PaginationService {
   protected createOrderQuery(filter: PaginationFilter) {
@@ -25,5 +24,4 @@ export class PaginationService {
       where: where,
     });
   }
-
 }

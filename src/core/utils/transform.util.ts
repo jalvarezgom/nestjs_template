@@ -6,4 +6,4 @@ export const TransformUtil = {
     const parsed = parseInt(value, 10);
     return isNaN(parsed) ? NaN : Math.max(parsed, options.min);
   },
-}
+};

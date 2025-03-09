@@ -1,6 +1,6 @@
-import {Exclude, Expose} from 'class-transformer';
-import {AuthTokenDto} from './auth.dto';
-import {ApiProperty} from "@nestjs/swagger";
+import { Exclude, Expose } from 'class-transformer';
+import { AuthTokenDto } from './auth.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Exclude()
 export class UserResponseDto {

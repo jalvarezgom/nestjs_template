@@ -1,15 +1,18 @@
-import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common';
-import {App_1Module} from './app_1/app_1.module';
-import {ConfigModule} from '@nestjs/config';
-import {TypeOrmModule} from '@nestjs/typeorm';
-import {configuration, getEnvironmentFileNameByEnvVariable,} from './core/config/configuration';
-import {AuthModule} from './auth/auth.module';
-import {CoreModule} from './core/core.module';
-import {getDatabaseProvider} from './core/providers/database.provider';
-import {WinstonModule} from 'nest-winston';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { App_1Module } from './app_1/app_1.module';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import {
+  configuration,
+  getEnvironmentFileNameByEnvVariable,
+} from './core/config/configuration';
+import { AuthModule } from './auth/auth.module';
+import { CoreModule } from './core/core.module';
+import { getDatabaseProvider } from './core/providers/database.provider';
+import { WinstonModule } from 'nest-winston';
 
-import {getLoggerProvider} from './core/providers/logger.provider';
-import {ResponseMiddleware} from "./core/middlewares/response.middleware";
+import { getLoggerProvider } from './core/providers/logger.provider';
+import { ResponseMiddleware } from './core/middlewares/response.middleware';
 
 @Module({
   imports: [
@@ -27,7 +30,7 @@ import {ResponseMiddleware} from "./core/middlewares/response.middleware";
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule{
+export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(ResponseMiddleware).forRoutes('*');
   }

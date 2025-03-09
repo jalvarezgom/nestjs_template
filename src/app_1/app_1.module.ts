@@ -1,7 +1,7 @@
 import {Logger, Module} from '@nestjs/common';
 import {ExampleRepository} from './repositories/example.repository';
 import {CoreModule} from '../core/core.module';
-import {ExampleController} from './controllers/exampleController';
+import {ExampleController} from './controllers/example.controller';
 import {ExampleService} from './services/example.service';
 
 @Module({

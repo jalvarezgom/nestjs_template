@@ -1,5 +1,5 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
-import {OTP} from './otp.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { OTP } from './otp.entity';
 
 @Entity()
 export class User {

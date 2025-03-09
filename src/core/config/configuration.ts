@@ -1,4 +1,4 @@
-import {EnvironmentTypes} from '../enums/environment.enum';
+import { EnvironmentTypes } from '../enums/environment.enum';
 
 const DEFAULT_SERVER_PORT = 3000;
 

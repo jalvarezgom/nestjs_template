@@ -1,13 +1,20 @@
-import {Body, Controller, Get, Param, Post, Req, UseGuards,} from '@nestjs/common';
-import {ChangePwdDto} from '../dtos/auth.dto';
-import {AccessTokenGuard} from '../guards/accessToken.guard';
-import {Request} from 'express';
-import {ProfileService} from '../services/profile.service';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { ChangePwdDto } from '../dtos/auth.dto';
+import { AccessTokenGuard } from '../guards/accessToken.guard';
+import { Request } from 'express';
+import { ProfileService } from '../services/profile.service';
 
 @Controller('profile')
 export class ProfileController {
-  constructor(private readonly profileService: ProfileService) {
-  }
+  constructor(private readonly profileService: ProfileService) {}
 
   @UseGuards(AccessTokenGuard)
   @Get('me')

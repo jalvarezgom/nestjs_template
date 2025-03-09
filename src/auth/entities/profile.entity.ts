@@ -1,5 +1,11 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn,} from 'typeorm';
-import {Language} from './language.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Language } from './language.entity';
 
 @Entity()
 export class Profile {
