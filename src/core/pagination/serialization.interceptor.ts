@@ -1,16 +1,12 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { ClassConstructor, plainToInstance } from 'class-transformer';
+import {CallHandler, ExecutionContext, Injectable, NestInterceptor,} from '@nestjs/common';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {ClassConstructor, plainToInstance} from 'class-transformer';
 
 @Injectable()
 export class SerializationInterceptor implements NestInterceptor {
-  constructor(private classConstructor: ClassConstructor<unknown>) {}
+  constructor(private classConstructor: ClassConstructor<unknown>) {
+  }
 
   intercept(
     context: ExecutionContext,

@@ -1,20 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Req, UseGuards,} from '@nestjs/common';
 import {AuthService} from '../services/auth.service';
-import {
-  AuthLoginDto,
-  AuthTokenDto,
-  ChangePwdDto,
-  CreateUserDto,
-  SendRecoverPwdDto,
-} from '../dtos/auth.dto';
+import {AuthLoginDto, AuthTokenDto, ChangePwdDto, CreateUserDto, SendRecoverPwdDto,} from '../dtos/auth.dto';
 import {AccessTokenGuard} from '../guards/accessToken.guard';
 import {Request} from 'express';
 import {RefreshTokenGuard} from '../guards/refreshToken.guard';

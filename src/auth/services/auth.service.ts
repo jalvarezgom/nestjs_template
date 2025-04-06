@@ -1,20 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from '../repositories/user.repository';
-import { User } from '../entities/user.entity';
-import {
-  AuthLoginDto,
-  AuthTokenDto,
-  ChangePwdDto,
-  CreateUserDto,
-} from '../dtos/auth.dto';
-import { HashUtil } from '../../core/utils/hash.util';
-import { OTP } from '../entities/otp.entity';
-import { OTPRepository } from '../repositories/otp.repository';
-import { UUIDUtil } from '../../core/utils/uuid.util';
-import { ProfileService } from './profile.service';
-import { UserResponseDto } from '../dtos/user.dto';
+import {BadRequestException, Injectable} from '@nestjs/common';
+import {ConfigService} from '@nestjs/config';
+import {JwtService} from '@nestjs/jwt';
+import {UserRepository} from '../repositories/user.repository';
+import {User} from '../entities/user.entity';
+import {AuthLoginDto, AuthTokenDto, ChangePwdDto, CreateUserDto,} from '../dtos/auth.dto';
+import {HashUtil} from '../../core/utils/hash.util';
+import {OTP} from '../entities/otp.entity';
+import {OTPRepository} from '../repositories/otp.repository';
+import {UUIDUtil} from '../../core/utils/uuid.util';
+import {ProfileService} from './profile.service';
+import {UserResponseDto} from '../dtos/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +21,8 @@ export class AuthService {
     private readonly profileService: ProfileService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-  ) {}
+  ) {
+  }
 
   async register(userDto: CreateUserDto): Promise<UserResponseDto> {
     let user: User | undefined = await this.usersRepository.findByUsername(
@@ -42,7 +38,7 @@ export class AuthService {
     user.password = await HashUtil.hashData(userDto.password);
     await this.usersRepository.save(user);
 
-    const { accessToken, refreshToken } = await this.getTokens(
+    const {accessToken, refreshToken} = await this.getTokens(
       user.id,
       user.username,
     );
@@ -73,7 +69,7 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new BadRequestException('Invalid credentials or user not found');
     }
-    const { accessToken, refreshToken } = await this.getTokens(
+    const {accessToken, refreshToken} = await this.getTokens(
       user.id,
       user.username,
     );
@@ -105,7 +101,7 @@ export class AuthService {
     if (!isValid) {
       throw new BadRequestException('Invalid credentials or user not found');
     }
-    const { accessToken, refreshToken } = await this.getTokens(
+    const {accessToken, refreshToken} = await this.getTokens(
       user.id,
       user.username,
     );
@@ -160,7 +156,7 @@ export class AuthService {
     await this.otpRepository.save(otp);
 
     // Return new access and refresh tokens
-    const { accessToken, refreshToken } = await this.getTokens(
+    const {accessToken, refreshToken} = await this.getTokens(
       user.id,
       user.username,
     );
