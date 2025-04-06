@@ -31,8 +31,10 @@ import {
   PaginatedResource,
   PaginationSerializerDto,
 } from '../../core/pagination/resource.dto';
-import {ExampleResponseDto} from '../dtos/example.response';
+import {ExampleResponseDto, ExampleSerializerResponseDto} from '../dtos/example.response';
 import {Serialize} from '../../core/pagination/serialization.decorator';
+import {ApiResponse} from "@nestjs/swagger";
+import {UserResponseDto} from "../../auth/dtos/user.dto";
 
 @Controller('app_1')
 export class ExampleController {
@@ -74,7 +76,12 @@ export class ExampleController {
   }
 
   @Get('find-all-paginated-filter')
-  @Serialize(PaginationSerializerDto(ExampleResponseDto))
+  @Serialize(PaginationSerializerDto(ExampleSerializerResponseDto))
+  @ApiResponse({
+    status: 201,
+    description: 'findAllPaginatedFilter example',
+    type: ExampleSerializerResponseDto,
+  })
   findAllPaginatedFilter(
     @PaginationParams() paginationParams: Pagination,
     @SortingParams(['name', 'id']) sort?: Sorting,
