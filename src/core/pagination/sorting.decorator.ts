@@ -1,9 +1,5 @@
-import {
-  BadRequestException,
-  createParamDecorator,
-  ExecutionContext,
-} from '@nestjs/common';
-import { Request } from 'express';
+import {BadRequestException, createParamDecorator, ExecutionContext,} from '@nestjs/common';
+import {Request} from 'express';
 
 export interface Sorting {
   property: string;
@@ -38,6 +34,6 @@ export const SortingParams = createParamDecorator(
     if (!validParams.includes(property))
       throw new BadRequestException(`Invalid sort property: ${property}`);
 
-    return { property, direction };
+    return {property, direction};
   },
 );

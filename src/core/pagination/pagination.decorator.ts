@@ -1,10 +1,6 @@
-import {
-  BadRequestException,
-  createParamDecorator,
-  ExecutionContext,
-} from '@nestjs/common';
-import { Request } from 'express';
-import { TransformUtil } from '../utils/transform.util';
+import {BadRequestException, createParamDecorator, ExecutionContext,} from '@nestjs/common';
+import {Request} from 'express';
+import {TransformUtil} from '../utils/transform.util';
 
 export interface Pagination {
   page: number;
@@ -17,7 +13,7 @@ const MAXPAGESIZE = 100;
 export const PaginationParams = createParamDecorator(
   (data, ctx: ExecutionContext): Pagination => {
     const req: Request = ctx.switchToHttp().getRequest();
-    const page = TransformUtil.toNumber(req.query.page, { default: 1, min: 1 }); //parseInt(req.query.page as string);
+    const page = TransformUtil.toNumber(req.query.page, {default: 1, min: 1}); //parseInt(req.query.page as string);
     const size = TransformUtil.toNumber(req.query.size, {
       default: 10,
       min: 1,
@@ -45,6 +41,6 @@ export const PaginationParams = createParamDecorator(
     // calculate pagination parameters
     const limit = size;
     const offset = (page - 1) * limit;
-    return { page, limit, size, offset };
+    return {page, limit, size, offset};
   },
 );

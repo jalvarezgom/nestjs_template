@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import {ApiProperty} from '@nestjs/swagger';
 
 export class ExceptionResponseDto {
   @ApiProperty({
@@ -20,4 +20,5 @@ export class ExceptionResponseDto {
   statusCode: number;
 }
 
-export class BadRequestExceptionDto extends ExceptionResponseDto {}
+export class BadRequestExceptionDto extends ExceptionResponseDto {
+}

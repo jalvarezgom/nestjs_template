@@ -1,10 +1,10 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { Logger, ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { EnvironmentConfigService } from './core/config/environment';
-import { getDatabaseProviderType } from './core/providers/database.provider';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {NestFactory} from '@nestjs/core';
+import {AppModule} from './app.module';
+import {Logger, ValidationPipe} from '@nestjs/common';
+import {ConfigService} from '@nestjs/config';
+import {EnvironmentConfigService} from './core/config/environment';
+import {getDatabaseProviderType} from './core/providers/database.provider';
+import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 
 async function bootstrap() {
   EnvironmentConfigService.validateEnvironmentConfig();

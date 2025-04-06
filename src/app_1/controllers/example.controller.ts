@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Inject,
-  LoggerService,
-  Post,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import {Controller, Get, Inject, LoggerService, Post, Query, UseGuards,} from '@nestjs/common';
 import {ExampleService} from '../services/example.service';
 import {Roles} from '../../auth/decorators/role.decorator';
 import {DomainRoles} from '../../auth/enums/role.enum';
@@ -15,26 +7,13 @@ import {AccessTokenGuard} from '../../auth/guards/accessToken.guard';
 import {WINSTON_MODULE_NEST_PROVIDER} from 'nest-winston/dist/winston.constants';
 import {ExampleEntity} from '../entities/example.entity';
 import {PaginationFilter} from '../../core/pagination-simple/pagination.filter';
-import {
-  Filtering,
-  FilteringParams,
-} from '../../core/pagination/filter.decorator';
-import {
-  Pagination,
-  PaginationParams,
-} from '../../core/pagination/pagination.decorator';
-import {
-  Sorting,
-  SortingParams,
-} from '../../core/pagination/sorting.decorator';
-import {
-  PaginatedResource,
-  PaginationSerializerDto,
-} from '../../core/pagination/resource.dto';
+import {Filtering, FilteringParams,} from '../../core/pagination/filter.decorator';
+import {Pagination, PaginationParams,} from '../../core/pagination/pagination.decorator';
+import {Sorting, SortingParams,} from '../../core/pagination/sorting.decorator';
+import {PaginatedResource, PaginationSerializerDto,} from '../../core/pagination/resource.dto';
 import {ExampleResponseDto, ExampleSerializerResponseDto} from '../dtos/example.response';
 import {Serialize} from '../../core/pagination/serialization.decorator';
 import {ApiResponse} from "@nestjs/swagger";
-import {UserResponseDto} from "../../auth/dtos/user.dto";
 
 @Controller('app_1')
 export class ExampleController {

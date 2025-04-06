@@ -1,12 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { UserRepository } from '../repositories/user.repository';
-import { User } from '../entities/user.entity';
-import { HashUtil } from '../../core/utils/hash.util';
-import { ChangePwdDto } from '../dtos/auth.dto';
+import {BadRequestException, Injectable} from '@nestjs/common';
+import {UserRepository} from '../repositories/user.repository';
+import {User} from '../entities/user.entity';
+import {HashUtil} from '../../core/utils/hash.util';
+import {ChangePwdDto} from '../dtos/auth.dto';
 
 @Injectable()
 export class ProfileService {
-  constructor(private usersRepository: UserRepository) {}
+  constructor(private usersRepository: UserRepository) {
+  }
 
   async me(user: User | string) {
     user = await this.usersRepository.getUser(user);
