@@ -1,4 +1,4 @@
-import { ClassConstructor, Type } from 'class-transformer';
+import {ClassConstructor, Type} from 'class-transformer';
 
 export type PaginatedResource<T> = {
   totalItems: number;
@@ -7,7 +7,7 @@ export type PaginatedResource<T> = {
   size: number;
 };
 
-export function PaginationDto<T>(dataDto: ClassConstructor<T>) {
+export function PaginationSerializerDto<T>(dataDto: ClassConstructor<T>) {
   class DecoratedPaginationDto {
     totalItems: number;
     @Type(() => dataDto)

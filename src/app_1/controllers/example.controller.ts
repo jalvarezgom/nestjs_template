@@ -29,9 +29,9 @@ import {
 } from '../../core/pagination/sorting.decorator';
 import {
   PaginatedResource,
-  PaginationDto,
+  PaginationSerializerDto,
 } from '../../core/pagination/resource.dto';
-import {ExampleResponseDto} from '../dtos/example.dto';
+import {ExampleResponseDto} from '../dtos/example.response';
 import {Serialize} from '../../core/pagination/serialization.decorator';
 
 @Controller('app_1')
@@ -74,7 +74,7 @@ export class ExampleController {
   }
 
   @Get('find-all-paginated-filter')
-  @Serialize(PaginationDto(ExampleResponseDto))
+  @Serialize(PaginationSerializerDto(ExampleResponseDto))
   findAllPaginatedFilter(
     @PaginationParams() paginationParams: Pagination,
     @SortingParams(['name', 'id']) sort?: Sorting,

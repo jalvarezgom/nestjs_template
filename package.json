@@ -1,8 +1,8 @@
 {
   "name": "nestjs_template",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
-  "author": "",
+  "author": "Jancel",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
