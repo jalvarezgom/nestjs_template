@@ -23,7 +23,7 @@ export const getDatabaseProvider = () => {
   return databaseTestProvider;
 };
 
-const getCommonDatabaseConfig = (config: ConfigService) => ({
+export const getCommonDatabaseConfig = (config: ConfigService) => ({
   host: config.get('databaseConfig.dbHost'),
   port: config.get('databaseConfig.dbPort'),
   username: config.get('databaseConfig.username'),
@@ -39,6 +39,8 @@ const databaseTestProvider: TypeOrmModuleAsyncOptions = {
     database: config.get('databaseConfig.dbName'),
     entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
     synchronize: true,
+    migrationsTableName: '_migrations',
+    migrationsRun: true,  // Auto-run migrations
     logging: true,
   }),
   inject: [ConfigService],
@@ -51,6 +53,8 @@ const databaseDevProvider: TypeOrmModuleAsyncOptions = {
     ...getCommonDatabaseConfig(config),
     entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
     synchronize: true,
+    migrationsTableName: '_migrations',
+    migrationsRun: true,  // Auto-run migrations
     logging: config.get('databaseConfig.debug'),
   }),
   inject: [ConfigService],
@@ -63,6 +67,9 @@ const databaseProdProvider: TypeOrmModuleAsyncOptions = {
     ...getCommonDatabaseConfig(config),
     entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
     synchronize: false,
+    migrations: ['/migrations/*{.ts,.js}'],
+    migrationsTableName: '_migrations',
+    migrationsRun: true,  // Auto-run migrations
     logging: false,
   }),
   inject: [ConfigService],
