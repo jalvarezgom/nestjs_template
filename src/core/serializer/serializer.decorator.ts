@@ -1,6 +1,5 @@
-import {Expose} from 'class-transformer';
-import {Constructor, SerializerFields} from "./resource.dto";
-
+import { Expose } from 'class-transformer';
+import { Constructor, SerializerFields } from './resource.dto';
 
 export function ExposeFields<TBase extends Constructor>(
   Base: TBase,

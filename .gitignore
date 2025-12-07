@@ -8,6 +8,7 @@
 /build
 
 # Logs
+share/log/*
 logs
 *.log
 npm-debug.log*

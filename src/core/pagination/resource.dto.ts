@@ -1,4 +1,4 @@
-import {ClassConstructor, Type} from 'class-transformer';
+import { ClassConstructor, Type } from 'class-transformer';
 
 export type PaginatedResource<T> = {
   totalItems: number;

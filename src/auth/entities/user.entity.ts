@@ -1,5 +1,15 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
-import {OTP} from './otp.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { OTP } from './otp.entity';
+import { Role } from './role.entity';
 
 @Entity()
 export class User {
@@ -21,6 +31,12 @@ export class User {
     nullable: false,
   })
   email: string;
+
+  @CreateDateColumn()
+  createTime: Date;
+
+  @UpdateDateColumn()
+  updateTime: Date;
 
   @Column({
     nullable: true,

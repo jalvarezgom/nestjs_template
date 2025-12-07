@@ -1,10 +1,14 @@
-import {ConfigModule, ConfigService} from '@nestjs/config';
-import {TypeOrmModuleAsyncOptions} from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import * as process from 'node:process';
-import {DatabaseProviderType, EnvironmentTypes,} from '../enums/environment.enum';
+import {
+  DatabaseProviderType,
+  EnvironmentTypes,
+} from '../enums/environment.enum';
 
 export const getDatabaseProviderType = (): DatabaseProviderType => {
-  switch (process.env.APP_ENV as EnvironmentTypes) {
+  const env = process.env.APP_ENV as EnvironmentTypes;
+  switch (env) {
     case EnvironmentTypes.DEV:
       return DatabaseProviderType.DEV;
     case EnvironmentTypes.TEST:
@@ -40,7 +44,7 @@ const databaseTestProvider: TypeOrmModuleAsyncOptions = {
     entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
     synchronize: true,
     migrationsTableName: '_migrations',
-    migrationsRun: true,  // Auto-run migrations
+    migrationsRun: true, // Auto-run migrations
     logging: true,
   }),
   inject: [ConfigService],
@@ -54,7 +58,7 @@ const databaseDevProvider: TypeOrmModuleAsyncOptions = {
     entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
     synchronize: true,
     migrationsTableName: '_migrations',
-    migrationsRun: true,  // Auto-run migrations
+    migrationsRun: true, // Auto-run migrations
     logging: config.get('databaseConfig.debug'),
   }),
   inject: [ConfigService],
@@ -69,7 +73,7 @@ const databaseProdProvider: TypeOrmModuleAsyncOptions = {
     synchronize: false,
     migrations: ['/migrations/*{.ts,.js}'],
     migrationsTableName: '_migrations',
-    migrationsRun: true,  // Auto-run migrations
+    migrationsRun: true, // Auto-run migrations
     logging: false,
   }),
   inject: [ConfigService],

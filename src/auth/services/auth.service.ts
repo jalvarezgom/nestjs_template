@@ -1,15 +1,21 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
-import {ConfigService} from '@nestjs/config';
-import {JwtService} from '@nestjs/jwt';
-import {UserRepository} from '../repositories/user.repository';
-import {User} from '../entities/user.entity';
-import {AuthLoginDto, AuthTokenDto, ChangePwdDto, CreateUserDto,} from '../dtos/auth.dto';
-import {HashUtil} from '../../core/utils/hash.util';
-import {OTP} from '../entities/otp.entity';
-import {OTPRepository} from '../repositories/otp.repository';
-import {UUIDUtil} from '../../core/utils/uuid.util';
-import {ProfileService} from './profile.service';
-import {UserResponseDto} from '../dtos/user.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { UserRepository } from '../repositories/user.repository';
+import { User } from '../entities/user.entity';
+import {
+  AuthLoginDto,
+  AuthTokenDto,
+  ChangePwdDto,
+  CreateUserDto,
+} from '../dtos/auth.dto';
+import { HashUtil } from '../../core/utils/hash.util';
+import { OTP } from '../entities/otp.entity';
+import { OTPRepository } from '../repositories/otp.repository';
+import { UUIDUtil } from '../../core/utils/uuid.util';
+import { ProfileService } from './profile.service';
+import { UserResponseDto } from '../dtos/user.dto';
+import { AuthMessages } from '../messages/auth.message';
 
 @Injectable()
 export class AuthService {
@@ -21,8 +27,7 @@ export class AuthService {
     private readonly profileService: ProfileService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-  ) {
-  }
+  ) {}
 
   async register(userDto: CreateUserDto): Promise<UserResponseDto> {
     let user: User | undefined = await this.usersRepository.findByUsername(
@@ -38,7 +43,7 @@ export class AuthService {
     user.password = await HashUtil.hashData(userDto.password);
     await this.usersRepository.save(user);
 
-    const {accessToken, refreshToken} = await this.getTokens(
+    const { accessToken, refreshToken } = await this.getTokens(
       user.id,
       user.username,
     );
@@ -59,7 +64,7 @@ export class AuthService {
       credentials.username,
     );
     if (!user) {
-      throw new BadRequestException('Invalid credentials or user not found');
+      throw new BadRequestException(AuthMessages.INVALID_CREDENTIALS);
     }
 
     const isPasswordValid = await HashUtil.verifyHash(
@@ -67,9 +72,9 @@ export class AuthService {
       credentials.password,
     );
     if (!isPasswordValid) {
-      throw new BadRequestException('Invalid credentials or user not found');
+      throw new BadRequestException(AuthMessages.INVALID_CREDENTIALS);
     }
-    const {accessToken, refreshToken} = await this.getTokens(
+    const { accessToken, refreshToken } = await this.getTokens(
       user.id,
       user.username,
     );
@@ -92,16 +97,16 @@ export class AuthService {
   async refreshToken(user: User | string, reqRefreshToken: string) {
     user = await this.usersRepository.getUser(user);
     if (!user || !user.refreshToken) {
-      throw new BadRequestException('Invalid credentials or user not found');
+      throw new BadRequestException(AuthMessages.INVALID_CREDENTIALS);
     }
     const isValid = await HashUtil.verifyHash(
       user.refreshToken,
       reqRefreshToken,
     );
     if (!isValid) {
-      throw new BadRequestException('Invalid credentials or user not found');
+      throw new BadRequestException(AuthMessages.INVALID_CREDENTIALS);
     }
-    const {accessToken, refreshToken} = await this.getTokens(
+    const { accessToken, refreshToken } = await this.getTokens(
       user.id,
       user.username,
     );
@@ -140,12 +145,10 @@ export class AuthService {
     // Validate otp
     const otp = await this.otpRepository.findByOTP(otpValue);
     if (!otp) {
-      throw new BadRequestException('Invalid OTP, please try again');
+      throw new BadRequestException(AuthMessages.INVALID_OTP);
     }
     if (otp.isUsed) {
-      throw new BadRequestException(
-        'OTP already used, please request a new one',
-      );
+      throw new BadRequestException(AuthMessages.OTP_USED);
     }
 
     // Update user password
@@ -156,7 +159,7 @@ export class AuthService {
     await this.otpRepository.save(otp);
 
     // Return new access and refresh tokens
-    const {accessToken, refreshToken} = await this.getTokens(
+    const { accessToken, refreshToken } = await this.getTokens(
       user.id,
       user.username,
     );
@@ -177,11 +180,11 @@ export class AuthService {
       this.jwtService.signAsync(
         {
           sub: userId,
-          username,
+          username: username,
         },
         {
           secret: this.configService.get<string>('token.accessSecret'),
-          expiresIn: this.configService.get<string>(
+          expiresIn: this.configService.get<any>(
             'token.accessSecretExpirationTime',
           ),
         },
@@ -193,7 +196,7 @@ export class AuthService {
         },
         {
           secret: this.configService.get<string>('token.refreshSecret'),
-          expiresIn: this.configService.get<string>(
+          expiresIn: this.configService.get<any>(
             'token.refreshSecretExpirationTime',
           ),
         },

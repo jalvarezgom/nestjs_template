@@ -1,14 +1,18 @@
-import {NestFactory} from '@nestjs/core';
-import {AppModule} from './app.module';
-import {Logger, ValidationPipe} from '@nestjs/common';
-import {ConfigService} from '@nestjs/config';
-import {EnvironmentConfigService} from './core/config/environment';
-import {getDatabaseProviderType} from './core/providers/database.provider';
-import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { EnvironmentConfigService } from './core/config/environment';
+import { getDatabaseProviderType } from './core/providers/database.provider';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   EnvironmentConfigService.validateEnvironmentConfig();
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(
+    AppModule,
+    // new FastifyAdapter(),
+    // { cors: { methods } },
+  );
   const configService = app.get(ConfigService);
 
   // Swagger
@@ -27,6 +31,7 @@ async function bootstrap() {
   Logger.log(`Application ${configService.get('app.name')}`);
   Logger.log(`\tEnvironment ${configService.get('app.env')}`);
   Logger.log(`\tDatabase configuration ${getDatabaseProviderType()}`);
+  Logger.log(`\tCache provider ${configService.get('cache.provider')}`);
   Logger.log(`\tServer running on port ${port} 🪄`);
 }
 

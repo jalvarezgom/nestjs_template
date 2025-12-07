@@ -1,7 +1,7 @@
-import {Exclude, Expose} from 'class-transformer';
-import {ApiProperty} from '@nestjs/swagger';
-import {ExampleEntity} from "../entities/example.entity";
-import {ExposeFields} from "../../core/serializer/serializer.decorator";
+import { Exclude, Expose } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+import { ExampleEntity } from '../entities/example.entity';
+import { ExposeFields } from '../../core/serializer/serializer.decorator';
 
 @Exclude()
 export class ExampleResponseDto {
@@ -12,7 +12,7 @@ export class ExampleResponseDto {
   })
   name: string;
 
-  @Expose({groups: ['admin']})
+  @Expose({ groups: ['admin'] })
   @ApiProperty({
     example: 'This is an example entity',
     description: 'The description of the Example',
@@ -25,11 +25,7 @@ export class ExampleResponseDto {
 }
 
 @Exclude()
-export class ExampleSerializerResponseDto extends ExposeFields(
-  ExampleEntity,
-  [
-    {field: 'name'},
-    {field: 'description', options: {groups: ['admin']}},
-  ],
-) {
-}
+export class ExampleSerializerResponseDto extends ExposeFields(ExampleEntity, [
+  { field: 'name' },
+  { field: 'description', options: { groups: ['admin'] } },
+]) {}

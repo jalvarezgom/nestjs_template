@@ -1,6 +1,10 @@
-import {BadRequestException, createParamDecorator, ExecutionContext,} from '@nestjs/common';
-import {Request} from 'express';
-import {FilterRule} from './pagination.enum';
+import {
+  BadRequestException,
+  createParamDecorator,
+  ExecutionContext,
+} from '@nestjs/common';
+import { Request } from 'express';
+import { FilterRule } from './pagination.enum';
 
 export interface Filtering {
   property: string;
@@ -69,7 +73,7 @@ export const FilteringParams = createParamDecorator(
         throw new BadRequestException(`Invalid filter property: ${property}`);
       if (!Object.values(FilterRule).includes(rule as FilterRule))
         throw new BadRequestException(`Invalid filter rule: ${rule}`);
-      filters.push({property, rule, value: req.query[field] as string});
+      filters.push({ property, rule, value: req.query[field] as string });
     });
 
     return filters;

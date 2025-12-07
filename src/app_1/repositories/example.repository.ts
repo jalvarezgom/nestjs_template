@@ -1,7 +1,7 @@
-import {DataSource} from 'typeorm';
-import {Injectable} from '@nestjs/common';
-import {ExampleEntity} from '../entities/example.entity';
-import {GenericRepository} from '../../core/providers/repository.provider';
+import { DataSource } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { ExampleEntity } from '../entities/example.entity';
+import { GenericRepository } from '../../core/providers/repository.provider';
 
 @Injectable()
 export class ExampleRepository extends GenericRepository<ExampleEntity> {

@@ -1,13 +1,17 @@
-import {ConfigModule, ConfigService} from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as process from 'node:process';
-import {EnvironmentTypes, LoggerProviderType,} from '../enums/environment.enum';
-import {WinstonModuleAsyncOptions} from 'nest-winston';
+import {
+  EnvironmentTypes,
+  LoggerProviderType,
+} from '../enums/environment.enum';
+import { WinstonModuleAsyncOptions } from 'nest-winston';
 import * as winston from 'winston';
 import * as path from 'node:path';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
 
 export const getLoggerProviderType = (): LoggerProviderType => {
-  switch (process.env.APP_ENV as EnvironmentTypes) {
+  const env = process.env.APP_ENV as EnvironmentTypes;
+  switch (env) {
     case EnvironmentTypes.DEV:
       return LoggerProviderType.DEV;
     case EnvironmentTypes.TEST:
@@ -25,7 +29,7 @@ export const getLoggerProvider = () => {
   return loggerDevProvider;
 };
 
-const customFormat = winston.format.printf(({timestamp, level, message}) => {
+const customFormat = winston.format.printf(({ timestamp, level, message }) => {
   return `${timestamp} ${level}: ${message}`;
 });
 

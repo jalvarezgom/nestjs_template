@@ -1,18 +1,32 @@
-import {Body, Controller, Get, Param, Post, Req, UseGuards,} from '@nestjs/common';
-import {AuthService} from '../services/auth.service';
-import {AuthLoginDto, AuthTokenDto, ChangePwdDto, CreateUserDto, SendRecoverPwdDto,} from '../dtos/auth.dto';
-import {AccessTokenGuard} from '../guards/accessToken.guard';
-import {Request} from 'express';
-import {RefreshTokenGuard} from '../guards/refreshToken.guard';
-import {UserResponseDto} from '../dtos/user.dto';
-import {ApiResponse} from '@nestjs/swagger';
-import {BadRequestExceptionDto} from '../../core/dto/exception.dto';
-import {Serialize} from "../../core/pagination/serialization.decorator";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthService } from '../services/auth.service';
+import {
+  AuthLoginDto,
+  AuthTokenDto,
+  ChangePwdDto,
+  CreateUserDto,
+  SendRecoverPwdDto,
+} from '../dtos/auth.dto';
+import { AccessTokenGuard } from '../guards/accessToken.guard';
+import { Request } from 'express';
+import { RefreshTokenGuard } from '../guards/refreshToken.guard';
+import { UserResponseDto } from '../dtos/user.dto';
+import { ApiResponse } from '@nestjs/swagger';
+import { BadRequestExceptionDto } from '../../core/dto/exception.dto';
+import { Serialize } from '../../core/pagination/serialization.decorator';
+import { AuthMessages } from '../messages/auth.message';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {
-  }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
   @Serialize(UserResponseDto)
@@ -39,7 +53,7 @@ export class AuthController {
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid credentials or user not found',
+    description: AuthMessages.INVALID_CREDENTIALS,
     type: BadRequestExceptionDto,
   })
   login(@Body() credentials: AuthLoginDto): Promise<UserResponseDto> {
@@ -48,8 +62,8 @@ export class AuthController {
 
   @Get('logout')
   @UseGuards(AccessTokenGuard)
-  @ApiResponse({status: 200, description: 'User logged out'})
-  @ApiResponse({status: 401, description: 'No logged'})
+  @ApiResponse({ status: 200, description: 'User logged out' })
+  @ApiResponse({ status: 401, description: 'No logged' })
   logout(@Req() request: Request) {
     return this.authService.logout(request.user['sub']);
   }
@@ -63,7 +77,7 @@ export class AuthController {
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid credentials or user not found',
+    description: AuthMessages.INVALID_CREDENTIALS,
     type: BadRequestExceptionDto,
   })
   refreshToken(

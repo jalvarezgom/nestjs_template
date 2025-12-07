@@ -1,19 +1,42 @@
-import {Controller, Get, Inject, LoggerService, Post, Query, UseGuards,} from '@nestjs/common';
-import {ExampleService} from '../services/example.service';
-import {Roles} from '../../auth/decorators/role.decorator';
-import {DomainRoles} from '../../auth/enums/role.enum';
-import {RoleGuard} from '../../auth/guards/role.guard';
-import {AccessTokenGuard} from '../../auth/guards/accessToken.guard';
-import {WINSTON_MODULE_NEST_PROVIDER} from 'nest-winston/dist/winston.constants';
-import {ExampleEntity} from '../entities/example.entity';
-import {PaginationFilter} from '../../core/pagination-simple/pagination.filter';
-import {Filtering, FilteringParams,} from '../../core/pagination/filter.decorator';
-import {Pagination, PaginationParams,} from '../../core/pagination/pagination.decorator';
-import {Sorting, SortingParams,} from '../../core/pagination/sorting.decorator';
-import {PaginatedResource, PaginationSerializerDto,} from '../../core/pagination/resource.dto';
-import {ExampleResponseDto, ExampleSerializerResponseDto} from '../dtos/example.response';
-import {Serialize} from '../../core/pagination/serialization.decorator';
-import {ApiResponse} from "@nestjs/swagger";
+import {
+  Controller,
+  Get,
+  Inject,
+  LoggerService,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { ExampleService } from '../services/example.service';
+import { Roles } from '../../auth/decorators/role.decorator';
+import { DomainRoles } from '../../auth/enums/role.enum';
+import { RoleGuard } from '../../auth/guards/role.guard';
+import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston/dist/winston.constants';
+import { ExampleEntity } from '../entities/example.entity';
+import { PaginationFilter } from '../../core/pagination-simple/pagination.filter';
+import {
+  Filtering,
+  FilteringParams,
+} from '../../core/pagination/filter.decorator';
+import {
+  Pagination,
+  PaginationParams,
+} from '../../core/pagination/pagination.decorator';
+import {
+  Sorting,
+  SortingParams,
+} from '../../core/pagination/sorting.decorator';
+import {
+  PaginatedResource,
+  PaginationSerializerDto,
+} from '../../core/pagination/resource.dto';
+import {
+  ExampleResponseDto,
+  ExampleSerializerResponseDto,
+} from '../dtos/example.response';
+import { Serialize } from '../../core/pagination/serialization.decorator';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('app_1')
 export class ExampleController {
@@ -21,8 +44,7 @@ export class ExampleController {
     private readonly ExampleService: ExampleService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER)
     private readonly logger: LoggerService,
-  ) {
-  }
+  ) {}
 
   @Post('create-data')
   createData() {
@@ -38,7 +60,7 @@ export class ExampleController {
     seed.price = 100;
     this.ExampleService.save(seed).then();
 
-    return {message: 'Data created'};
+    return { message: 'Data created' };
   }
 
   @Get('find-all')
@@ -64,7 +86,7 @@ export class ExampleController {
   findAllPaginatedFilter(
     @PaginationParams() paginationParams: Pagination,
     @SortingParams(['name', 'id']) sort?: Sorting,
-    @FilteringParams({fields: ['name', 'id']}) filters?: Filtering[],
+    @FilteringParams({ fields: ['name', 'id'] }) filters?: Filtering[],
   ): Promise<PaginatedResource<Partial<ExampleResponseDto>>> {
     this.logger.log('Finding all data paginated');
     return this.ExampleService.findAllPaginatedFilter(
@@ -77,12 +99,12 @@ export class ExampleController {
   @Get('test')
   testEndpoint() {
     this.logger.error('Registering user');
-    return {message: 'test endpoint'};
+    return { message: 'test endpoint' };
   }
 
   @Roles(DomainRoles.ADMIN)
   @UseGuards(AccessTokenGuard, RoleGuard)
-  @Get()
+  @Get('role-guard-example')
   example() {
     return this.ExampleService.execute_example();
   }

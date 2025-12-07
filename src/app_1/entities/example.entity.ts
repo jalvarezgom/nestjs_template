@@ -1,5 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
-import {ApiProperty} from "@nestjs/swagger";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class ExampleEntity {
@@ -25,7 +25,9 @@ export class ExampleEntity {
   description: string;
 
   @Column()
+  @ApiProperty({
+    example: 100,
+    description: 'The price of the Example',
+  })
   price: number;
-
-
 }

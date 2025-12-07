@@ -11,10 +11,13 @@ export class EnvironmentConfigService {
     'JWT_REFRESH_SECRET',
     'JWT_REFRESH_SECRET_EXPIRATION_TIME',
     // Database configuration
-    'DB_HOST',
-    'DB_USERNAME',
-    'DB_PASSWORD',
-    'DB_NAME',
+    'DB__HOST',
+    'DB__USERNAME',
+    'DB__PASSWORD',
+    'DB__NAME',
+    // Cache configuration
+    'CACHE__PROVIDER',
+    'CACHE__TTL',
   ];
 
   static validateEnvironmentConfig() {

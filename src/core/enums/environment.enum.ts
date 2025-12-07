@@ -14,3 +14,8 @@ export enum LoggerProviderType {
   DEV = 'loggerDevProvider',
   PROD = 'loggerProdProvider',
 }
+
+export enum CacheProviderType {
+  MEMORY = 'MEMORY',
+  REDIS = 'REDIS',
+}
